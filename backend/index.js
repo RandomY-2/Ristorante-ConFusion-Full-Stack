@@ -1,5 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+
 const app = express();
 
 const dishRouter = require("./routes/dishRouter");
@@ -14,6 +18,18 @@ app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
 app.use("/leaders", leaderRouter);
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+mongoose
+  .connect(process.env.CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log("Server running on port 5000...");
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+mongoose.set("useFindAndModify", false);
