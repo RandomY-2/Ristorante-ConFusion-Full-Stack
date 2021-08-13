@@ -4,7 +4,6 @@ const Dishes = require("../models/dish");
 module.exports.getDishes = async (req, res) => {
   try {
     const dishes = await Dishes.find();
-
     res.status(200).json(dishes);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -26,8 +25,14 @@ module.exports.postDish = async (req, res) => {
 module.exports.getDishById = async (req, res) => {
   try {
     const { dishId } = req.params;
-    const returnedDish = await Dishes.findById(dishId);
 
+    if (!mongoose.Types.ObjectId.isValid(dishId)) {
+      return res.status(404).json({
+        error: "No dish with the given id",
+      });
+    }
+
+    const returnedDish = await Dishes.findById(dishId);
     res.status(200).json(returnedDish);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -48,6 +53,7 @@ module.exports.updateDishById = async (req, res) => {
     const updatedDish = await Dishes.findByIdAndUpdate(dishId, newDish, {
       new: true,
     });
+    await updatedDish.save();
     res.status(200).json(updatedDish);
   } catch (error) {
     res.status(400).json({ error: error.message });

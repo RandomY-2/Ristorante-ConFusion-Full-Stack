@@ -1,54 +1,82 @@
-module.exports.getPromotions = (req, res) => {
+const mongoose = require("mongoose");
+const Promotions = require("../models/promotions");
+
+module.exports.getPromotions = async (req, res) => {
   try {
-    res.status(200).json({ message: "Getting Promotions" });
+    const promotions = await Promotions.find();
+    res.status(200).json(promotions);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-module.exports.postPromotion = (req, res) => {
-  const { name, id } = req.body;
-
+module.exports.postPromotion = async (req, res) => {
   try {
-    res.status(200).json({ message: "Creating Promotion", name, id });
+    const promotion = req.body;
+    const newPromotion = new Promotions(promotion);
+
+    await newPromotion.save();
+    res.status(200).json(newPromotion);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-module.exports.getPromotionById = (req, res) => {
-  const { promotionId } = req.params;
-
+module.exports.getPromotionById = async (req, res) => {
   try {
-    res
-      .status(200)
-      .json({ message: `Getting the Promotion with id: ${promotionId}` });
+    const { promotionId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(promotionId)) {
+      return res.status(404).json({
+        error: "No promotion with the given id",
+      });
+    }
+
+    const promotion = await Promotions.findById(promotionId);
+    res.status(200).json(promotion);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-module.exports.updatePromotionById = (req, res) => {
-  const { promotionId } = req.params;
-
+module.exports.updatePromotionById = async (req, res) => {
   try {
-    res
-      .status(200)
-      .json({ message: `Updating the Promotion with id: ${promotionId}` });
+    const { promotionId } = req.params;
+    const newPromotion = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(promotionId)) {
+      return res.status(404).json({
+        error: "No promotion with the given id",
+      });
+    }
+
+    const updatedPromotion = await Promotions.findByIdAndUpdate(
+      promotionId,
+      newPromotion,
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(updatedPromotion);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-module.exports.deletePromotionById = (req, res) => {
-  const { promotionId } = req.params;
-
+module.exports.deletePromotionById = async (req, res) => {
   try {
-    res
-      .status(200)
-      .json({ message: `Deleting the Promotion with id: ${promotionId}` });
+    const { promotionId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(promotionId)) {
+      return res.status(404).json({
+        error: "No promotion with the given id",
+      });
+    }
+
+    await Promotions.findByIdAndDelete(promotionId);
+    res.status(200).json({ message: "Promotion successfully deleted" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
