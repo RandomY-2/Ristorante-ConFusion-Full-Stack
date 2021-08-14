@@ -9,7 +9,7 @@ const {
   leaderUnsupportedHandler,
 } = require("../controllers/leaderController");
 
-leaderRouter = express.Router();
+const leaderRouter = express.Router();
 
 leaderRouter.get("/", getLeaders);
 leaderRouter.post("/", postLeader);

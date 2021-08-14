@@ -2,11 +2,14 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const passport = require("passport");
+const authenticate = require("./authenticate");
 const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
 
+const userRouter = require("./routes/userRouter");
 const dishRouter = require("./routes/dishRouter");
 const promoRouter = require("./routes/promoRouter");
 const leaderRouter = require("./routes/leaderRouter");
@@ -15,7 +18,9 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
 
+app.use("/user", userRouter);
 app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
 app.use("/leaders", leaderRouter);

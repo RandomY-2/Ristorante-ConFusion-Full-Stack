@@ -9,7 +9,7 @@ const {
   promotionUnsupportedHandler,
 } = require("../controllers/promoController");
 
-promoRouter = express.Router();
+const promoRouter = express.Router();
 
 promoRouter.get("/", getPromotions);
 promoRouter.post("/", postPromotion);
