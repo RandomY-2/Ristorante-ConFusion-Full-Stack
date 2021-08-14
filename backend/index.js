@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -13,6 +14,7 @@ const leaderRouter = require("./routes/leaderRouter");
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
+app.use(cookieParser());
 
 app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
