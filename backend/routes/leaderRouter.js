@@ -1,5 +1,5 @@
 const express = require("express");
-
+const authenticate = require("../authenticate");
 const {
   getLeaders,
   postLeader,
@@ -11,14 +11,44 @@ const {
 
 const leaderRouter = express.Router();
 
-leaderRouter.get("/", getLeaders);
-leaderRouter.post("/", postLeader);
-leaderRouter.delete("/", leaderUnsupportedHandler);
-leaderRouter.put("/", leaderUnsupportedHandler);
+leaderRouter.get("/", authenticate.verifyUser, getLeaders);
+leaderRouter.post(
+  "/",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  postLeader
+);
+leaderRouter.put(
+  "/",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  leaderUnsupportedHandler
+);
+leaderRouter.delete(
+  "/",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  leaderUnsupportedHandler
+);
 
-leaderRouter.get("/:leaderId", getLeaderById);
-leaderRouter.post("/:leaderId", leaderUnsupportedHandler);
-leaderRouter.delete("/:leaderId", deleteLeaderById);
-leaderRouter.put("/:leaderId", updateLeaderById);
+leaderRouter.get("/:leaderId", authenticate.verifyUser, getLeaderById);
+leaderRouter.post(
+  "/:leaderId",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  leaderUnsupportedHandler
+);
+leaderRouter.put(
+  "/:leaderId",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  updateLeaderById
+);
+leaderRouter.delete(
+  "/:leaderId",
+  authenticate.verifyUser,
+  authenticate.verifyAdmin,
+  deleteLeaderById
+);
 
 module.exports = leaderRouter;

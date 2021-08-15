@@ -6,7 +6,7 @@ module.exports.getPromotions = async (req, res) => {
     const promotions = await Promotions.find();
     res.status(200).json(promotions);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -18,7 +18,7 @@ module.exports.postPromotion = async (req, res) => {
     await newPromotion.save();
     res.status(200).json(newPromotion);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -35,7 +35,7 @@ module.exports.getPromotionById = async (req, res) => {
     const promotion = await Promotions.findById(promotionId);
     res.status(200).json(promotion);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -59,7 +59,7 @@ module.exports.updatePromotionById = async (req, res) => {
     );
     res.status(200).json(updatedPromotion);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -76,7 +76,7 @@ module.exports.deletePromotionById = async (req, res) => {
     await Promotions.findByIdAndDelete(promotionId);
     res.status(200).json({ message: "Promotion successfully deleted" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 

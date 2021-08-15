@@ -20,7 +20,7 @@ app.use(express.json({ extended: false }));
 app.use(cookieParser());
 app.use(passport.initialize());
 
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
 app.use("/leaders", leaderRouter);

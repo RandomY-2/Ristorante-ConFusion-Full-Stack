@@ -6,7 +6,7 @@ module.exports.getLeaders = async (req, res) => {
     const leaders = await Leaders.find();
     res.status(200).json(leaders);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -18,7 +18,7 @@ module.exports.postLeader = async (req, res) => {
     await newLeader.save();
     res.status(200).json(newLeader);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -35,7 +35,7 @@ module.exports.getLeaderById = async (req, res) => {
     const leader = await Leaders.findById(leaderId);
     res.status(200).json(leader);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -56,7 +56,7 @@ module.exports.updateLeaderById = async (req, res) => {
     await updatedLeader.save();
     res.status(200).json(updatedLeader);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -73,7 +73,7 @@ module.exports.deleteLeaderById = async (req, res) => {
     await Leaders.findByIdAndDelete(leaderId);
     res.status(200).json({ message: "Leader successfully deleted" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 

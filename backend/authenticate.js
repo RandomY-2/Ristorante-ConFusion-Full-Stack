@@ -20,7 +20,6 @@ module.exports.getToken = (user) => {
 
 module.exports.jwtPassport = passport.use(
   new JwtStrategy(options, (jwt_payload, done) => {
-    console.log("JWT payload: ", jwt_payload);
     Users.findOne({ _id: jwt_payload._id }, (err, user) => {
       if (err) {
         return done(err, false);
@@ -34,3 +33,19 @@ module.exports.jwtPassport = passport.use(
 );
 
 module.exports.verifyUser = passport.authenticate("jwt", { session: false });
+
+module.exports.verifyAdmin = async (req, res, next) => {
+  try {
+    const user = await Users.findById(req.user._id);
+
+    if (user.admin) {
+      next();
+    } else {
+      res
+        .status(400)
+        .json({ error: "You are not authorized to perform this operation" });
+    }
+  } catch (error) {
+    res.status(503).json({ error: error.message });
+  }
+};

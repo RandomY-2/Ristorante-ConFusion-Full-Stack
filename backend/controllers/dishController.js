@@ -6,7 +6,7 @@ module.exports.getDishes = async (req, res) => {
     const dishes = await Dishes.find();
     res.status(200).json(dishes);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -18,7 +18,7 @@ module.exports.postDish = async (req, res) => {
     await newDish.save();
     res.status(200).json(newDish);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -35,7 +35,7 @@ module.exports.getDishById = async (req, res) => {
     const returnedDish = await Dishes.findById(dishId);
     res.status(200).json(returnedDish);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -56,7 +56,7 @@ module.exports.updateDishById = async (req, res) => {
     await updatedDish.save();
     res.status(200).json(updatedDish);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -73,7 +73,7 @@ module.exports.deleteDishById = async (req, res) => {
     await Dishes.findByIdAndDelete(dishId);
     res.status(200).json({ message: "Dish successfully deleted" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -95,7 +95,7 @@ module.exports.getDishComments = async (req, res) => {
     const returnedComments = dish.comments;
     res.status(200).json(returnedComments);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -115,7 +115,7 @@ module.exports.postDishComment = async (req, res) => {
     await dish.save();
     res.status(200).json(dish.comments);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -134,7 +134,7 @@ module.exports.deleteDishComments = async (req, res) => {
     await dish.save();
     res.status(200).json(dish.comments);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -155,7 +155,7 @@ module.exports.getDishComment = async (req, res) => {
 
     res.status(200).json(comment);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -182,7 +182,7 @@ module.exports.updateDishComment = async (req, res) => {
     await dish.save();
     res.status(200).json({ message: "comment updated" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
 
@@ -203,6 +203,6 @@ module.exports.deleteDishComment = async (req, res) => {
     await dish.save();
     res.status(200).json({ message: "Comment deleted" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(503).json({ error: error.message });
   }
 };
