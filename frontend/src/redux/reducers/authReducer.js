@@ -39,6 +39,7 @@ export default function useReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         isAuthenticated: false,
+        user: "",
         errMess: action.payload,
       };
     case LOGOUT_REQUEST:

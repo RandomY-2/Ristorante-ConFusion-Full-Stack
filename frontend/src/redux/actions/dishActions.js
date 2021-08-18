@@ -17,7 +17,6 @@ export const getDishes = () => async (dispatch) => {
     const res = await axios.get(getUrl("dishes"));
     dispatch({ type: ADD_DISHES, payload: res.data });
   } catch (error) {
-    console.log(error);
     dispatch({ type: DISHES_FAILED, payload: error.message });
   }
 };
