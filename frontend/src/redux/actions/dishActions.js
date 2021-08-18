@@ -13,10 +13,11 @@ export const postDish = (newDish) => async (dispatch) => {
 
 export const getDishes = () => async (dispatch) => {
   try {
-    dispatch({ DISHES_LOADING });
+    dispatch({ type: DISHES_LOADING });
     const res = await axios.get(getUrl("dishes"));
     dispatch({ type: ADD_DISHES, payload: res.data });
   } catch (error) {
+    console.log(error);
     dispatch({ type: DISHES_FAILED, payload: error.message });
   }
 };

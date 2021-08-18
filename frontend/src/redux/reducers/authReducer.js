@@ -11,9 +11,9 @@ const initialState = {
   isLoading: false,
   isAuthenticated: localStorage.getItem("token") ? true : false,
   token: localStorage.getItem("token"),
-  user: localStorage.getItem("creds")
-    ? JSON.parse(localStorage.getItem("creds"))
-    : null,
+  user: localStorage.getItem("username")
+    ? localStorage.getItem("username")
+    : "",
   errMess: null,
 };
 

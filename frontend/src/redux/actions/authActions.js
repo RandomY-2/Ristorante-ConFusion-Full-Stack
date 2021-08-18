@@ -14,16 +14,12 @@ export const loginUser = (creds) => async (dispatch) => {
     const { username, password } = creds;
     dispatch({ type: LOGIN_REQUEST, payload: { username, password } });
 
-    const response = await axios.post(getUrl("users/login"), {
-      username,
-      password,
-    });
+    const response = await axios.post(getUrl("users/login"), creds);
 
-    if (response.success) {
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("creds", { username, password });
+    if (response.data.message === "You have logged in") {
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", username);
 
-      // dispatch(fetchFavorites());
       dispatch({ type: LOGIN_SUCCESS, payload: response.token });
     } else {
       var error = new Error("Error " + response.status);

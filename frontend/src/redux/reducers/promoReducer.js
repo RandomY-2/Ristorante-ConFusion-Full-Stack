@@ -1,4 +1,4 @@
-import { ADD_PROMOS, PROMOS_LOADING, PROMOS_FAILED } from "../type";
+import { ADD_PROMOS, ADD_PROMO, PROMOS_LOADING, PROMOS_FAILED } from "../type";
 
 const initialState = {
   isLoading: true,
@@ -14,6 +14,14 @@ export default function useReducer(state = initialState, action) {
         isLoading: false,
         errMess: null,
         promotions: action.payload,
+      };
+
+    case ADD_PROMO:
+      return {
+        ...state,
+        isLoading: false,
+        errMess: null,
+        promotions: [...state.promotions, action.payload],
       };
 
     case PROMOS_LOADING:

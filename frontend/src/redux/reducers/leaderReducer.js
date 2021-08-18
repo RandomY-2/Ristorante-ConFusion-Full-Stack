@@ -1,4 +1,9 @@
-import { ADD_LEADERS, LEADERS_LOADING, LEADERS_FAILED } from "../type";
+import {
+  ADD_LEADERS,
+  ADD_LEADER,
+  LEADERS_LOADING,
+  LEADERS_FAILED,
+} from "../type";
 
 const initialState = { isLoading: true, errMess: null, leaders: [] };
 
@@ -10,6 +15,14 @@ export default function useReducer(state = initialState, action) {
         isLoading: false,
         errMess: null,
         leaders: action.payload,
+      };
+
+    case ADD_LEADER:
+      return {
+        ...state,
+        isLoading: false,
+        errMess: null,
+        leaders: [...state.leaders, action.payload],
       };
 
     case LEADERS_LOADING:
