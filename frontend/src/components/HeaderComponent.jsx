@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -19,6 +19,10 @@ import {
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, logoutUser } from "../redux/actions/authActions";
+import { getDishes } from "../redux/actions/dishActions";
+import { getPromotions } from "../redux/actions/promoReducer";
+import { getLeaders } from "../redux/actions/leaderActions";
+import axios from "axios";
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -29,6 +33,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isAuthLoading = useSelector((state) => state.auth.isLoading);
+  const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
 
   const handleUsernameInput = (e) => {
@@ -49,6 +54,19 @@ const Header = () => {
     dispatch(logoutUser());
   };
 
+  const fetchInfo = () => {
+    dispatch(getDishes());
+    dispatch(getPromotions());
+    dispatch(getLeaders());
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      axios.defaults.headers["Authorization"] = "Bearer " + token;
+      fetchInfo();
+    }
+  }, [isAuthenticated]);
+  
   return (
     <React.Fragment>
       <Navbar dark expand="md">

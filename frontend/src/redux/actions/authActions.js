@@ -19,7 +19,7 @@ export const loginUser = (creds) => async (dispatch) => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", username);
 
-      dispatch({ type: LOGIN_SUCCESS, payload: response.token });
+      dispatch({ type: LOGIN_SUCCESS, payload: response.data.token });
       alert("You have successfully logged in");
       window.location.reload();
     } else {

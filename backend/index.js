@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
+const path = require("path");
 const authenticate = require("./authenticate");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
   res.send("Hello to backend");
 });
 
+app.use(express.static(path.join(__dirname, "./public")));
 app.use("/users", userRouter);
 app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
