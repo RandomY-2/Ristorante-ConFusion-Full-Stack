@@ -5,6 +5,7 @@ import { withRouter, Switch, Route } from 'react-router';
 import Header from "./HeaderComponent";
 import Home from "./HomeComponent";
 import AboutUs from "./AboutComponent";
+import Menu from "./MenuComponent";
 import Footer from "./FooterComponent";
 import { Redirect } from 'react-router-dom';
 
@@ -20,6 +21,9 @@ const MainComponent = (props) => {
             </Route>
             <Route exact path="/aboutus">
               <AboutUs />
+            </Route>
+            <Route exact path="/menu">
+              <Menu />
             </Route>
             <Redirect to="/home" />
           </Switch>

@@ -13,7 +13,7 @@ import { getUrl } from "../shared/baseUrl";
 import { Fade, Stagger } from "react-animation-components";
 import { useSelector } from "react-redux";
 
-function RenderLeader({ leader }) {
+const RenderLeader = ({ leader }) => {
   return (
     <div class="d-flex align-items-center mt-3">
       <div class="flex-shrink-0">
