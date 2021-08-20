@@ -20,6 +20,7 @@ export const postFeedback = (newFeedback) => async (dispatch) => {
   try {
     const res = await axios.post(getUrl("feedbacks"), newFeedback);
     dispatch({ type: ADD_FEEDBACK, payload: newFeedback });
+    alert("We have received your feedback!");
   } catch (error) {
     dispatch({ type: FEEDBACK_FAILED, payload: error.message });
   }
