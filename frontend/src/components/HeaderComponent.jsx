@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, logoutUser } from "../redux/actions/authActions";
+import { loginUser, logoutUser, registerUser } from "../redux/actions/authActions";
 import { getDishes } from "../redux/actions/dishActions";
 import { getPromotions } from "../redux/actions/promoReducer";
 import { getLeaders } from "../redux/actions/leaderActions";
@@ -27,14 +27,17 @@ import axios from "axios";
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isAuthLoading = useSelector((state) => state.auth.isLoading);
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
+  const errMess = useSelector((state) => state.auth.errMess);
 
   const handleUsernameInput = (e) => {
     setUsername(e.target.value);
@@ -44,10 +47,25 @@ const Header = () => {
     setPassword(e.target.value);
   };
 
+  const handleRepeatPasswordInput = (e) => {
+    setRepeatPassword(e.target.value);
+  }
+
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser({ username, password }));
   };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    if (password !== repeatPassword) {
+      alert("Passwords are not the same!");
+      return;
+    }
+
+    dispatch(registerUser({ username, password }));
+    setIsRegisterModalOpen(false);
+  }
 
   const handleLogOut = (e) => {
     e.preventDefault();
@@ -59,6 +77,12 @@ const Header = () => {
     dispatch(getPromotions());
     dispatch(getLeaders());
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      alert("Please Login or register to view the website");
+    }
+  }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -98,11 +122,6 @@ const Header = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to="/favorites">
-                  <span className="fa fa-heart fa-lg"></span> My Favorites
-                </NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink className="nav-link" to="/contactus">
                   <span className="fa fa-address-card fa-lg"></span> Contact Us
                 </NavLink>
@@ -115,6 +134,16 @@ const Header = () => {
                   {user}
                 </NavItem>
               )}
+              {
+                !isAuthenticated && (
+                  <Button className="me-5" outline onClick={() => setIsRegisterModalOpen(!isRegisterModalOpen)}>
+                    <span className="fa fa-sign-in fa-lg"></span> Register
+                    {isAuthLoading ? (
+                      <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                    ) : null}
+                  </Button>
+                )
+              }
               <NavItem>
                 {!isAuthenticated ? (
                   <Button outline onClick={() => setIsModalOpen(!isModalOpen)}>
@@ -179,6 +208,47 @@ const Header = () => {
             <br />
             <Button type="submit" value="submit" color="primary">
               Login
+            </Button>
+          </Form>
+        </ModalBody>
+      </Modal>
+
+      <Modal isOpen={isRegisterModalOpen} toggle={() => setIsRegisterModalOpen(!isRegisterModalOpen)}>
+        <ModalHeader toggle={() => setIsRegisterModalOpen(!isRegisterModalOpen)}>
+          Register
+        </ModalHeader>
+        <ModalBody>
+          <Form onSubmit={handleRegister}>
+            <FormGroup>
+              <Label htmlFor="username">Username</Label>
+              <Input
+                type="text"
+                id="username"
+                name="username"
+                onChange={handleUsernameInput}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                onChange={handlePassowrdInput}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="repeatPassword">Repeat Password</Label>
+              <Input
+                type="password"
+                id="repeatPassword"
+                name="repeatPassword"
+                onChange={handleRepeatPasswordInput}
+              />
+            </FormGroup>
+            <br />
+            <Button type="submit" value="submit" color="primary">
+              Register
             </Button>
           </Form>
         </ModalBody>

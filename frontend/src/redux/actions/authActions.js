@@ -33,6 +33,15 @@ export const loginUser = (creds) => async (dispatch) => {
   }
 };
 
+export const registerUser = (newUser) => async (dispatch) => {
+  try {
+    const res = await axios.post(getUrl("users/register"), newUser);
+    alert("You have successfully registered! You can login now");
+  } catch (error) {
+    dispatch({ type: LOGIN_FAILURE, payload: error.message });
+  }
+};
+
 export const logoutUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOGOUT_REQUEST });

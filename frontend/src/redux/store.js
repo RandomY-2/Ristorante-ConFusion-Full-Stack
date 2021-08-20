@@ -7,6 +7,7 @@ import commentReducer from "./reducers/commentReducer";
 import dishReducer from "./reducers/dishReducer";
 import leaderReducer from "./reducers/leaderReducer";
 import promoReducer from "./reducers/promoReducer";
+import feedbackReducer from "./reducers/feedbackReducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   dish: dishReducer,
   leader: leaderReducer,
   promotion: promoReducer,
+  feedback: feedbackReducer,
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

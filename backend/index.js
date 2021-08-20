@@ -16,6 +16,7 @@ const dishRouter = require("./routes/dishRouter");
 const promoRouter = require("./routes/promoRouter");
 const leaderRouter = require("./routes/leaderRouter");
 const uploadRouter = require("./routes/uploadRouter");
+const feedbackRouter = require("./routes/feedbackRouter");
 
 app.use(cors());
 app.use(morgan("dev"));
@@ -34,6 +35,7 @@ app.use("/dishes", dishRouter);
 app.use("/promotions", promoRouter);
 app.use("/leaders", leaderRouter);
 app.use("/imageUpload", uploadRouter);
+app.use("/feedbacks", feedbackRouter);
 
 mongoose
   .connect(process.env.CONNECTION_URL, {

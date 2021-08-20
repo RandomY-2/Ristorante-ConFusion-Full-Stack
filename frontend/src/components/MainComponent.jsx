@@ -6,6 +6,8 @@ import Header from "./HeaderComponent";
 import Home from "./HomeComponent";
 import AboutUs from "./AboutComponent";
 import Menu from "./MenuComponent";
+import DishDetail from "./DishDetailComponent";
+import ContactUs from "./ContactComponent";
 import Footer from "./FooterComponent";
 import { Redirect } from 'react-router-dom';
 
@@ -24,6 +26,12 @@ const MainComponent = (props) => {
             </Route>
             <Route exact path="/menu">
               <Menu />
+            </Route>
+            <Route exact path="/menu/:dishId">
+              <DishDetail />
+            </Route>
+            <Route exact path="/contactus">
+              <ContactUs />
             </Route>
             <Redirect to="/home" />
           </Switch>
