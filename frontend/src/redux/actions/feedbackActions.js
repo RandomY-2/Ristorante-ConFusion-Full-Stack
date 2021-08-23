@@ -1,11 +1,6 @@
 import axios from "axios";
 import { getUrl } from "../../shared/baseUrl";
-import {
-  GET_FEEDBACKS,
-  ADD_FEEDBACK,
-  FEEDBACK_FAILED,
-  FEEDACK_FAILED,
-} from "../type";
+import { GET_FEEDBACKS, ADD_FEEDBACK, FEEDBACK_FAILED } from "../type";
 
 export const getFeedbacks = () => async (dispatch) => {
   try {

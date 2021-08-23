@@ -5,8 +5,18 @@ const { restart } = require("nodemon");
 
 module.exports.login = async (req, res) => {
   try {
+    const user = await Users.findById(req.user._id);
     const token = authenticate.getToken({ _id: req.user._id });
-    res.status(200).json({ message: "You have logged in", token });
+
+    if (user.admin) {
+      res
+        .status(200)
+        .json({ adminStatus: true, message: "You have logged in", token });
+    } else {
+      res
+        .status(200)
+        .json({ adminStatus: false, message: "You have logged in", token });
+    }
   } catch (error) {
     res.status(503).json({ error: error.message });
   }
