@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, logoutUser, registerUser } from "../redux/actions/authActions";
+import { loginUser, logoutUser, registerUser, checkAdminStatus } from "../redux/actions/authActions";
 import { getDishes } from "../redux/actions/dishActions";
 import { getPromotions } from "../redux/actions/promoReducer";
 import { getLeaders } from "../redux/actions/leaderActions";
@@ -37,7 +37,7 @@ const Header = () => {
   const isAuthLoading = useSelector((state) => state.auth.isLoading);
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
-  const errMess = useSelector((state) => state.auth.errMess);
+  const isAdmin = useSelector(state => state.auth.isAdmin);
 
   const handleUsernameInput = (e) => {
     setUsername(e.target.value);
@@ -88,6 +88,8 @@ const Header = () => {
     if (isAuthenticated) {
       axios.defaults.headers["Authorization"] = "Bearer " + token;
       fetchInfo();
+
+      dispatch(checkAdminStatus());
     }
   }, [isAuthenticated]);
   
@@ -126,6 +128,14 @@ const Header = () => {
                   <span className="fa fa-address-card fa-lg"></span> Contact Us
                 </NavLink>
               </NavItem>
+              {
+                isAdmin &&
+                <NavItem>
+                  <NavLink className="nav-link" to="/admin">
+                    <span className="fa fa-columns fa-lg"></span> Admin Control Panel
+                  </NavLink>
+                </NavItem>
+              }
             </Nav>
             <Nav className="ms-auto" navbar>
               {user && (

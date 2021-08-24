@@ -5,6 +5,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  MAKE_ADMIN,
 } from "../type";
 import axios from "axios";
 import { getUrl } from "../../shared/baseUrl";
@@ -15,6 +16,7 @@ export const loginUser = (creds) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST, payload: username });
 
     const response = await axios.post(getUrl("users/login"), creds);
+
     if (response.data.message === "You have logged in") {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", username);
@@ -51,5 +53,17 @@ export const logoutUser = () => async (dispatch) => {
     window.location.reload();
   } catch (error) {
     dispatch({ type: LOGOUT_FAILURE, payload: error.messaeg });
+  }
+};
+
+export const checkAdminStatus = () => async (dispatch) => {
+  try {
+    const response = await axios.post(getUrl("users/checkAdmin"));
+
+    if (response.data.isAdmin) {
+      dispatch({ type: MAKE_ADMIN });
+    }
+  } catch (error) {
+    dispatch({ type: LOGIN_FAILURE, payload: error.message });
   }
 };

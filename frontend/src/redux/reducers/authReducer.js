@@ -5,10 +5,12 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  MAKE_ADMIN,
 } from "../type";
 
 const initialState = {
   isLoading: false,
+  isAdmin: false,
   isAuthenticated: localStorage.getItem("token") ? true : false,
   token: localStorage.getItem("token"),
   user: localStorage.getItem("username")
@@ -58,6 +60,11 @@ export default function useReducer(state = initialState, action) {
         isLoading: false,
         isAuthenticated: true,
         errMess: action.payload,
+      };
+    case MAKE_ADMIN:
+      return {
+        ...state,
+        isAdmin: true,
       };
     default:
       return state;
