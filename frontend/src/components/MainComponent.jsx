@@ -8,7 +8,6 @@ import AboutUs from "./AboutComponent";
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
 import ContactUs from "./ContactComponent";
-import AdminControlPanel from "./AdminControlPanel";
 import Footer from "./FooterComponent";
 import { Redirect } from "react-router-dom";
 
@@ -33,9 +32,6 @@ const MainComponent = (props) => {
             </Route>
             <Route exact path="/contactus">
               <ContactUs />
-            </Route>
-            <Route exact path="/admin">
-              <AdminControlPanel />
             </Route>
             <Redirect to="/home" />
           </Switch>
