@@ -3,7 +3,7 @@
 a MERN stack resturant website.
 
 ## View:
-Frontend Url: https://con-fusion-ristorante.netlify.app/
+Frontend Url: https://con-fusion-ristorante.netlify.app/ (images may be missing because heroku clears public folder in backend)
 
 Backend Url: https://con-fusion-ristorante.herokuapp.com/
 
