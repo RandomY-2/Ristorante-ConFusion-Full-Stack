@@ -128,14 +128,6 @@ const Header = () => {
                   <span className="fa fa-address-card fa-lg"></span> Contact Us
                 </NavLink>
               </NavItem>
-              {
-                isAdmin &&
-                <NavItem>
-                  <NavLink className="nav-link" to="/admin">
-                    <span className="fa fa-columns fa-lg"></span> Admin Control Panel
-                  </NavLink>
-                </NavItem>
-              }
             </Nav>
             <Nav className="ms-auto" navbar>
               {user && (

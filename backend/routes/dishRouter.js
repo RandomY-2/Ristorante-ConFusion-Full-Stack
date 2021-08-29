@@ -58,12 +58,7 @@ dishRouter.delete(
 );
 
 dishRouter.get("/:dishId/comments", authenticate.verifyUser, getDishComments);
-dishRouter.post(
-  "/:dishId/comments",
-  authenticate.verifyUser,
-  authenticate.verifyAdmin,
-  postDishComment
-);
+dishRouter.post("/:dishId/comments", authenticate.verifyUser, postDishComment);
 dishRouter.put(
   "/:dishId/comments",
   authenticate.verifyUser,
